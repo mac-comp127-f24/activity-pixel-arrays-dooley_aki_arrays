@@ -2,21 +2,37 @@ import java.util.Scanner;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
+import edu.macalester.graphics.Image.PixelFormat;
 
 public class ImageTransform {
 
     public static Image lighten(Image srcImage) {
         // TODO: Task 1
 
-        throw new UnsupportedOperationException("Method not yet defined");
+float [] lighten=srcImage.toFloatArray(PixelFormat.RGB);
+for(int i=0;i<lighten.length;i++){
+lighten[i]*=1.5;
+}
+return new Image((int)srcImage.getWidth(),(int)srcImage.getHeight(),lighten,PixelFormat.RGB);
+
+
     }
 
 
     public static Image greenShift(Image srcImage) {
-        // TODO: Task 2
-
-        throw new UnsupportedOperationException("Method not yet defined");
+        // Convert the image to a float array in RGB format
+        float[] greenShift = srcImage.toFloatArray(PixelFormat.RGB);
+    
+        // Iterate through each pixel, adjusting only the green channel
+        for (int i = 0; i < greenShift.length; i += 3) {
+            // greenShift[i] is red, greenShift[i+1] is green, greenShift[i+2] is blue
+            greenShift[i + 1] = Math.min(greenShift[i+1] + 0.25f, 1.0f); // Shift green and clamp to max 1.0
+        }
+    
+        // Create and return the new image with the modified pixel data
+        return new Image((int) srcImage.getWidth(), (int) srcImage.getHeight(), greenShift, PixelFormat.RGB);
     }
+
 
     public static Image invert(Image srcImage) {
         // TODO: Task 3
